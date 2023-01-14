@@ -4,7 +4,7 @@ services:
     build:
       context: ./fastApi
       args:
-        BOT_TOKRN: ${BOT_TOKRN}
+        BOT_TOKEN: ${BOT_TOKEN}
     ports:
       - "5000:8000"
     environment:
@@ -17,7 +17,7 @@ services:
     build: 
       context: ./telegram
       args:
-        BOT_TOKRN: ${BOT_TOKRN}
+        BOT_TOKEN: ${BOT_TOKEN}
         BASE_URL: ${BASE_URL}
     environment:
       - SQLITE_PATH=/sqlite.db

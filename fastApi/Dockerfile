@@ -15,8 +15,8 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 COPY ./app /code/app
 
 # Set Environment Variables
-ARG BOT_TOKRN
-ENV BOT_TOKEN=$BOT_TOKRN
+ARG BOT_TOKEN
+ENV BOT_TOKEN=$BOT_TOKEN
 
 # Create Volume
 RUN mkdir /code/app/volume
