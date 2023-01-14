@@ -1,11 +1,10 @@
 '''
 This File Contains The Main FastAPI Code
 '''
+from fastapi import FastAPI, Request
 
 import app.scripts.database as db
 import app.scripts.telegram as tl
-
-from fastapi import FastAPI, Request
 
 
 app = FastAPI()
@@ -33,9 +32,11 @@ async def webhook(uuid: str, request: Request):
     Returns:
         Response: JSON Response
     '''
+    headers = request.headers
     chat_id = db.get_telegram_chat_id_by_webhook_url(uuid)
     payload = await request.json()
-    tl.send_message_to_user(chat_id, payload)
+    request_type = headers["x-github-event"] or headers["x-gitlab-event"]
+    tl.send_message_to_user(chat_id, payload, request_type)
 
     return {
         "isOk": True
