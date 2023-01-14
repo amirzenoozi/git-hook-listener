@@ -1,0 +1,20 @@
+name: TelegramBot Image
+
+on:
+  push:
+   branches: [ main ]
+  pull_request:
+    branches: [ main ]
+      
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build & Push Image
+      run: |
+        echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{secrets.DOCKERHUB_USERNAME}}" --password-stdin
+        docker image build fastApi -t amirzenoozi/webhook-telegram-bot:latest
+        docker push amirzenoozi/webhook-telegram-bot:latest
