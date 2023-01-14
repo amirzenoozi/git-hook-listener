@@ -22,8 +22,6 @@ ENV BASE_URL=$BASE_URL
 
 # Create Volume
 RUN mkdir /code/volume
-RUN echo "This is a test file" > /code/volume/test.txt
-VOLUME /code/volume
 
 # Set the command to run the uvicorn server.
 CMD ["python", "bot.py"]

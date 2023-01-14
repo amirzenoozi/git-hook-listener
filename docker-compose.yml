@@ -12,8 +12,7 @@ services:
     env_file:
       - .env
     volumes:
-      - "./static:/app/app/static/"
-      - "./data/sqlite.db:/sqlite.db"
+      - /code/app/volume:~/volume
   bot:
     build: 
       context: ./telegram
@@ -25,5 +24,4 @@ services:
     env_file:
       - .env
     volumes:
-      - "./static:/app/app/static/"
-      - "./data/sqlite.db:/sqlite.db"
+      - /code/app/volume:~/volume"
