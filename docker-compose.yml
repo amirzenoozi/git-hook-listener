@@ -1,0 +1,29 @@
+version: '3'
+services:
+  web_app:
+    build:
+      context: ./fastApi
+      args:
+        BOT_TOKRN: ${BOT_TOKRN}
+    ports:
+      - "5000:8000"
+    environment:
+      - SQLITE_PATH=/sqlite.db
+    env_file:
+      - .env
+    volumes:
+      - "./static:/app/app/static/"
+      - "./data/sqlite.db:/sqlite.db"
+  bot:
+    build: 
+      context: ./telegram
+      args:
+        BOT_TOKRN: ${BOT_TOKRN}
+        BASE_URL: ${BOT_TOKRN}
+    environment:
+      - SQLITE_PATH=/sqlite.db
+    env_file:
+      - .env
+    volumes:
+      - "./static:/app/app/static/"
+      - "./data/sqlite.db:/sqlite.db"
