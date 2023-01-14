@@ -1,0 +1,20 @@
+name: Python application
+
+on:
+  push:
+   branches: [ master ]
+  pull_request:
+    branches: [ master ]
+      
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build & Push Image
+      run: |
+        echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{secrets.DOCKERHUB_USERNAME}}" --password-stdin
+        docker image build fastApi -t amirzenoozi/fastapi-application:latest
+        docker push amirzenoozi/fastapi-application:latest
