@@ -14,9 +14,11 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 # Copy the ./app directory inside the /code directory.
 COPY . /code
 
+ARG BOT_TOKEN
+ARG BASE_URL
 # Set Environment Variables
-ENV BOT_TOKEN=""
-ENV BASE_URL="http://127.0.0.1:5000"
+ENV BOT_TOKEN=$BOT_TOKEN
+ENV BASE_URL=$BASE_URL
 
 # Create Volume
 RUN mkdir /code/volume
