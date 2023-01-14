@@ -12,7 +12,7 @@ services:
     env_file:
       - .env
     volumes:
-      - /code/app/volume:~/volume
+      - /code/app/volume:/docker-volume
   bot:
     build: 
       context: ./telegram
