@@ -37,7 +37,7 @@ def insert_user_webhook_url(chat_id, link):
     db_connection = sqlite3.connect('./volume/webhook.db')
     db_cursor = db_connection.cursor()
     # Check User is Exist Or Not
-    find_user_query = """SELECT chat_id FROM users WHERE chat_id = (?) LIMIT 1"""
+    find_user_query = """SELECT user_id FROM users WHERE chat_id = (?) LIMIT 1"""
     user = db_cursor.execute(find_user_query, (chat_id,)).fetchone()
     find_link_query = """SELECT id FROM links WHERE user_id = (?) AND link = (?) LIMIT 1"""
     link_record = db_cursor.execute(find_link_query, (user[0], link)).fetchone()
