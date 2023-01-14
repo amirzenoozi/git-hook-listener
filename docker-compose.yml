@@ -18,10 +18,10 @@ services:
       context: ./telegram
       args:
         BOT_TOKRN: ${BOT_TOKRN}
-        BASE_URL: ${BOT_TOKRN}
+        BASE_URL: ${BASE_URL}
     environment:
       - SQLITE_PATH=/sqlite.db
     env_file:
       - .env
     volumes:
-      - /docker-volume:/code/app/volume
+      - /docker-volume:/code/volume
