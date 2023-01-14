@@ -23,11 +23,11 @@ def send_message_to_user(chat_id, request, type):
     keyboard.add(link_button)
     message_body = ''
 
-    if type == 'push' or type == 'Push Hook':
+    if type in ('push', 'Push Hook'):
         message_body = f'''New Commit On Your Ripo `{request["repository"]["name"]}` 🦊.
         \n\nCommit Message:
         \n`{request["commits"][0]["message"]}`'''
-    elif type == 'tag_push' or type == 'Tag Push Hook':
+    elif type in ('tag_push', 'Tag Push Hook'):
         message_body = f'''New Tag Push On Your Ripo `{request["repository"]["name"]}` 🦊.
         \n\nTag Message:
         \n`{request["message"]}`'''
