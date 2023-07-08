@@ -8,7 +8,7 @@ import telebot
 
 import scripts.database as db
 
-app = telebot.TeleBot("1849393294:AAHG0nwoHgwSIC4dOnmMOB-3SqDrMgzl-aU")
+app = telebot.TeleBot(os.getenv('BOT_TOKEN'))
 db_connection = sqlite3.connect('./volume/webhook.db')
 db_cursor = db_connection.cursor()
 
