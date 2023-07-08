@@ -24,13 +24,18 @@ def send_message_to_user(chat_id, request, req_type):
     message_body = ''
 
     if req_type in ('push', 'Push Hook'):
-        message_body = f'''New Commit On Your Ripo `{request["repository"]["name"]}` 🦊.
+        message_body = f'''New Commit On Your Repo `{request["repository"]["name"]}` 🦊.
         \n\nCommit Message:
         \n`{request["commits"][0]["message"]}`'''
     elif req_type in ('tag_push', 'Tag Push Hook'):
-        message_body = f'''New Tag Push On Your Ripo `{request["repository"]["name"]}` 🦊.
+        message_body = f'''New Tag Push On Your Repo `{request["repository"]["name"]}` 🦊.
         \n\nTag Message:
         \n`{request["message"]}`'''
+    elif req_type in ('release', 'Release Hook'):
+        message_body = f'''New Release On Your Repo `{request["project"]["name"]}` 🦊.
+        \n\nRelease Name: {request["name"]}
+        \nTag Name: {request["tag"]}
+        \n\n{request["description"]}'''
     else:
         message_body = f'''New {req_type} On Your Ripo `{request["repository"]["name"]}` 🦊.'''
 
