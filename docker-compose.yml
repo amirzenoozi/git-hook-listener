@@ -5,6 +5,8 @@ services:
       context: ./fastApi
       args:
         BOT_TOKEN: ${BOT_TOKEN}
+        GROUP_CHAT_ID: ${GROUP_CHAT_ID}
+        CHANGELOG_TOPIC_ID: ${CHANGELOG_TOPIC_ID}
     ports:
       - "5000:8000"
     environment:

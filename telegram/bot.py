@@ -8,7 +8,7 @@ import telebot
 
 import scripts.database as db
 
-app = telebot.TeleBot(os.getenv('BOT_TOKEN'))
+app = telebot.TeleBot("1849393294:AAHG0nwoHgwSIC4dOnmMOB-3SqDrMgzl-aU")
 db_connection = sqlite3.connect('./volume/webhook.db')
 db_cursor = db_connection.cursor()
 
@@ -42,10 +42,15 @@ def start_bot(messages):
         messages (Message): Telegram Message Object
     """
     user_uuid = str(uuid.uuid4())
+    if messages.reply_to_message is not None:
+        thread_id = messages.reply_to_message.message_thread_id
+    else:
+        thread_id = ''
     app.send_message(
-        messages.chat.id,
-        f'Wellcome Dear {messages.from_user.first_name}👋🏻',
-        parse_mode='Markdown'
+        chat_id=messages.chat.id,
+        text=f'Wellcome Dear {messages.from_user.first_name}👋🏻',
+        parse_mode='Markdown',
+        message_thread_id=thread_id,
     )
     db.insert_bot_user(user_uuid, messages.from_user.id, messages.from_user.first_name)
 
@@ -57,12 +62,23 @@ def get_webhook_url(messages):
     """
     webhook_address_uuid = f'{str(uuid.uuid4())}'
     base_url = os.getenv('BASE_URL')
+    if messages.reply_to_message is not None:
+        thread_id = messages.reply_to_message.message_thread_id
+    else:
+        thread_id = ''
+
+
     app.send_message(
-        messages.chat.id,
-        f'''Please Add Generated Url To Your Gitlab Ripo 🦊.
+        chat_id=messages.chat.id,
+        text=f'Dear {messages.from_user.first_name} Please Check Your Direct Messages!',
+        message_thread_id=thread_id,
+    )
+    app.send_message(
+        chat_id=messages.from_user.id,
+        text=f'''Please Add Generated Url To Your Gitlab Repo 🦊.
         \n\nYour Webhook URL:
         \n`{base_url}/webhook/{webhook_address_uuid}`''',
-        parse_mode='Markdown'
+        parse_mode='Markdown',
     )
     db.insert_user_webhook_url(messages.from_user.id, webhook_address_uuid)
 
