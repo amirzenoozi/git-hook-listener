@@ -16,28 +16,23 @@ def send_message_to_user(chat_id, request, req_type):
     Args:
         chat_id (int): Telegram Chat ID
         request (object): Request Payload
-        req_type (str): Github Payload Type
+        req_type (str): GitHub Payload Type
     """
-    link_button = types.InlineKeyboardButton(text='Open It!', url=request["commits"][0]["url"])
-    keyboard = types.InlineKeyboardMarkup()
-    keyboard.add(link_button)
     message_body = ''
 
-    if req_type in ('push', 'Push Hook'):
-        message_body = f'''New Commit On Your Repo `{request["repository"]["name"]}` 🦊.
-        \n\nCommit Message:
-        \n`{request["commits"][0]["message"]}`'''
-    elif req_type in ('tag_push', 'Tag Push Hook'):
-        message_body = f'''New Tag Push On Your Repo `{request["repository"]["name"]}` 🦊.
-        \n\nTag Message:
-        \n`{request["message"]}`'''
-    elif req_type in ('release', 'Release Hook'):
+    if req_type in ('release', 'Release Hook'):
+        link_button = types.InlineKeyboardButton(text='Open It!', url=request["url"])
+        keyboard = types.InlineKeyboardMarkup()
+        keyboard.add(link_button)
         message_body = f'''New Release On Your Repo `{request["project"]["name"]}` 🦊.
         \n\nRelease Name: {request["name"]}
         \nTag Name: {request["tag"]}
         \n\n{request["description"]}'''
     else:
-        message_body = f'''New {req_type} On Your Ripo `{request["repository"]["name"]}` 🦊.'''
+        link_button = types.InlineKeyboardButton(text='Open It!', url=request["repository"]["homepage"])
+        keyboard = types.InlineKeyboardMarkup()
+        keyboard.add(link_button)
+        message_body = f'''New {req_type} On Your Repo `{request["repository"]["name"]}` 🦊.'''
 
 
     telegram.send_message(
