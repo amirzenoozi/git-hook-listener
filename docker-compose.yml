@@ -14,7 +14,7 @@ services:
     env_file:
       - .env
     volumes:
-      - /docker-volume:/code/app/volume
+      - $PWD/docker-volume:/code/app/volume
   bot:
     build: 
       context: ./telegram
@@ -26,4 +26,4 @@ services:
     env_file:
       - .env
     volumes:
-      - /docker-volume:/code/volume
+      - $PWD/docker-volume:/code/volume
