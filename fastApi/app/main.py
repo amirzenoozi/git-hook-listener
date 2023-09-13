@@ -33,12 +33,13 @@ async def webhook(uuid: str, request: Request):
     Returns:
         Response: JSON Response
     """
-    chat_id = os.getenv('GROUP_CHAT_ID')
-    topic_id = os.getenv('CHANGELOG_TOPIC_ID')
-    # chat_id = db.get_telegram_chat_id_by_webhook_url(uuid)
-    payload = await request.json()
-    request_type = payload["object_kind"] or "general"
-    tl.send_message_to_single_topic(chat_id, payload, request_type, topic_id)
+    if (uuid == os.getenv('WEBHOOK_UUID')):
+        chat_id = os.getenv('GROUP_CHAT_ID')
+        topic_id = os.getenv('CHANGELOG_TOPIC_ID')
+        # chat_id = db.get_telegram_chat_id_by_webhook_url(uuid)
+        payload = await request.json()
+        request_type = payload["object_kind"] or "general"
+        tl.send_message_to_single_topic(chat_id, payload, request_type, topic_id)
 
     return {
         "isOk": True
