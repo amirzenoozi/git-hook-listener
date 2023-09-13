@@ -20,8 +20,8 @@ def read_root():
         "data": "Hello World!"
     }
 
-@app.post('/webhook/{uuid}')
-async def webhook(uuid: str, request: Request):
+@app.post(f'/webhook/{os.getenv("WEBHOOK_UUID")}')
+async def webhook(request: Request):
     """
     This Function Is Called When A New Message Is Received From Any Webhook
     First It Gets The Chat ID From The Database
@@ -33,13 +33,11 @@ async def webhook(uuid: str, request: Request):
     Returns:
         Response: JSON Response
     """
-    if (uuid == os.getenv('WEBHOOK_UUID')):
-        chat_id = os.getenv('GROUP_CHAT_ID')
-        topic_id = os.getenv('CHANGELOG_TOPIC_ID')
-        # chat_id = db.get_telegram_chat_id_by_webhook_url(uuid)
-        payload = await request.json()
-        request_type = payload["object_kind"] or "general"
-        tl.send_message_to_single_topic(chat_id, payload, request_type, topic_id)
+    chat_id = os.getenv('GROUP_CHAT_ID')
+    topic_id = os.getenv('CHANGELOG_TOPIC_ID')
+    payload = await request.json()
+    request_type = payload["object_kind"] or "general"
+    tl.send_message_to_single_topic(chat_id, payload, request_type, topic_id)
 
     return {
         "isOk": True
